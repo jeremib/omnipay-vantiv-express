@@ -1,0 +1,44 @@
+HTTP/1.1 200 OK
+Date: Thu, 04 Dec 2014 19:48:38 GMT
+content-type: text/plain; charset=ISO-8859-1
+content-length: 1183, 1183
+content-transfer-encoding: text/xml
+document-type: Response
+mime-version: 1.0
+Connection: close
+
+<CreditCardSaleResponse xmlns='https://transaction.elementexpress.com'>
+    <Response>
+        <ExpressResponseCode>0</ExpressResponseCode>
+        <ExpressResponseMessage>Approved</ExpressResponseMessage>
+        <HostResponseCode>000</HostResponseCode>
+        <HostResponseMessage>AP</HostResponseMessage>
+        <ExpressTransactionDate>20180308</ExpressTransactionDate>
+        <ExpressTransactionTime>140933</ExpressTransactionTime>
+        <ExpressTransactionTimezone>UTC-06:00:00</ExpressTransactionTimezone>
+        <Batch>
+            <HostBatchID>1</HostBatchID>
+            <HostItemID>4</HostItemID>
+            <HostBatchAmount>4800.00</HostBatchAmount>
+        </Batch>
+        <Card>
+            <AVSResponseCode>N</AVSResponseCode>
+            <CardLogo>Visa</CardLogo>
+            <CardNumberMasked>xxxx-xxxx-xxxx-1111</CardNumberMasked>
+            <BIN>411111</BIN>
+        </Card>
+        <Transaction>
+            <TransactionID>3333348</TransactionID>
+            <ApprovalNumber>000009</ApprovalNumber>
+            <AcquirerData>aVb001234567810425c0425d5e00</AcquirerData>
+            <ProcessorName>NULL_PROCESSOR_TEST</ProcessorName>
+            <TransactionStatus>Approved</TransactionStatus>
+            <TransactionStatusCode>1</TransactionStatusCode>
+            <ApprovedAmount>1200.00</ApprovedAmount>
+        </Transaction>
+        <Address>
+            <BillingAddress1>123 Billing St</BillingAddress1>
+            <BillingZipcode>12345</BillingZipcode>
+        </Address>
+    </Response>
+</CreditCardSaleResponse>

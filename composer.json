@@ -1,0 +1,36 @@
+{
+    "name": "jeremib/omnipay-vantiv-express",
+    "type": "library",
+    "description": "Vantiv Express driver for the Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "chase",
+        "paymentech",
+        "orbital",
+        "pay",
+        "payment"
+    ],
+    "homepage": "https://github.com/jeremib/omnipay-vantiv-express",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeremi Bergman",
+            "email": "jeremib@gmail.com"
+        },
+        {
+            "name": "Omnipay Contributors",
+            "homepage": "https://github.com/twg/omnipay-paymentech-orbital/contributors"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\VantivExpress\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    }
+}

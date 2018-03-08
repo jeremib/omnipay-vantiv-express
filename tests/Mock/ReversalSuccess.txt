@@ -1,0 +1,34 @@
+HTTP/1.1 200 OK
+Date: Tue, 09 Dec 2014 19:59:27 GMT
+content-type: text/plain; charset=ISO-8859-1
+content-length: 378
+content-transfer-encoding: text/xml
+document-type: Response
+mime-version: 1.0
+Connection: close
+
+<CreditCardReversalResponse xmlns='https://transaction.elementexpress.com'>
+    <Response>
+        <ExpressResponseCode>0</ExpressResponseCode>
+        <ExpressResponseMessage>Success</ExpressResponseMessage>
+        <HostResponseCode>006</HostResponseCode>
+        <HostResponseMessage>REVERSED</HostResponseMessage>
+        <ExpressTransactionDate>20180308</ExpressTransactionDate>
+        <ExpressTransactionTime>155200</ExpressTransactionTime>
+        <ExpressTransactionTimezone>UTC-06:00:00</ExpressTransactionTimezone>
+        <Card>
+            <CardLogo>Visa</CardLogo>
+            <CardNumberMasked>xxxx-xxxx-xxxx-1111</CardNumberMasked>
+            <BIN>411111</BIN>
+        </Card>
+        <Transaction>
+            <TransactionID>3337678</TransactionID>
+            <ApprovalNumber>000036</ApprovalNumber>
+            <ReferenceNumber>1520544965</ReferenceNumber>
+            <AcquirerData>aVb001234567810425c0425d5e00</AcquirerData>
+            <ProcessorName>NULL_PROCESSOR_TEST</ProcessorName>
+            <TransactionStatus>Success</TransactionStatus>
+            <TransactionStatusCode>8</TransactionStatusCode>
+        </Transaction>
+    </Response>
+</CreditCardReversalResponse>

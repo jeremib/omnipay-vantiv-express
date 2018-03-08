@@ -1,0 +1,39 @@
+HTTP/1.1 200 OK
+Date: Fri, 05 Dec 2014 18:47:33 GMT
+content-type: text/plain; charset=ISO-8859-1
+content-length: 564
+content-transfer-encoding: text/xml
+document-type: Response
+mime-version: 1.0
+Connection: close
+
+<CreditCardAuthorizationCompletionResponse xmlns='https://transaction.elementexpress.com'>
+    <Response>
+        <ExpressResponseCode>0</ExpressResponseCode>
+        <ExpressResponseMessage>Success</ExpressResponseMessage>
+        <HostResponseCode>000</HostResponseCode>
+        <HostResponseMessage>AP</HostResponseMessage>
+        <ExpressTransactionDate>20180308</ExpressTransactionDate>
+        <ExpressTransactionTime>153631</ExpressTransactionTime>
+        <ExpressTransactionTimezone>UTC-06:00:00</ExpressTransactionTimezone>
+        <Batch>
+            <HostBatchID>1</HostBatchID>
+            <HostItemID>7</HostItemID>
+            <HostBatchAmount>4900.00</HostBatchAmount>
+        </Batch>
+        <Card>
+            <CardLogo>Visa</CardLogo>
+            <CardNumberMasked>xxxx-xxxx-xxxx-1111</CardNumberMasked>
+            <BIN>411111</BIN>
+        </Card>
+        <Transaction>
+            <TransactionID>3335993</TransactionID>
+            <ApprovalNumber>000036</ApprovalNumber>
+            <ReferenceNumber>1520544965</ReferenceNumber>
+            <AcquirerData>aVb001234567810425c0425d5e00</AcquirerData>
+            <ProcessorName>NULL_PROCESSOR_TEST</ProcessorName>
+            <TransactionStatus>Approved</TransactionStatus>
+            <TransactionStatusCode>1</TransactionStatusCode>
+        </Transaction>
+    </Response>
+</CreditCardAuthorizationCompletionResponse>
