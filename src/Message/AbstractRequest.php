@@ -245,5 +245,26 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setReferenceNumber($value)
     {
         return $this->setParameter('ReferenceNumber', $value);
+    }   
+    
+
+    public function getCheckAccountNumber()
+    {
+        return $this->getParameter('CheckAccountNumber');
+    }
+
+    public function setCheckAccountNumber($value)
+    {
+        return $this->setParameter('CheckAccountNumber', $value);
+    }  
+
+    public function getCheckRoutingNumber()
+    {
+        return $this->getParameter('CheckRoutingNumber');
+    }
+
+    public function setCheckRoutingNumber($value)
+    {
+        return $this->setParameter('CheckRoutingNumber', $value);
     }     
 }

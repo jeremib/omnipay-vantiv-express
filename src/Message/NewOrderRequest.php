@@ -33,8 +33,8 @@ abstract class NewOrderRequest extends AbstractRequest
         }elseif ( $this->getBCRtNum() ) {
             $data = $this->getXmlElement('Check');
             $depositAccount = $data->DemandDepositAccount;
-            $depositAccount->AccountNumber  = $this->getCheckDDA();
-            $depositAccount->RoutingNumber  = $this->getBCRtNum();
+            $depositAccount->AccountNumber  = $this->getCheckAccountNumber();
+            $depositAccount->RoutingNumber  = $this->setCheckRoutingNumber();
             $depositAccount->DDAAccountType = 0;
         }
 
