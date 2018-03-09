@@ -13,7 +13,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "jeremib/omnipay-vantiv-express": "0.1"
+        "jeremib/omnipay-vantiv-express": "0.1.0"
     }
 }
 ```
