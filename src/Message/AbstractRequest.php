@@ -236,4 +236,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('ReversalType', $value);
     }  
+
+    public function getReferenceNumber()
+    {
+        return $this->getParameter('ReferenceNumber');
+    }
+
+    public function setReferenceNumber($value)
+    {
+        return $this->setParameter('ReferenceNumber', $value);
+    }     
 }

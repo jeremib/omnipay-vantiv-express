@@ -34,6 +34,7 @@ class Gateway extends AbstractGateway
             'MotoECICode'               => 1,
             'CVVPresenceCode'           => 1,
             'MarketCode'                => 7,
+            'ReferenceNumber'           => ''
         ];
     }
 
@@ -186,6 +187,16 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('MarketCode', $value);
     }
+
+    public function getReferenceNumber()
+    {
+        return $this->getParameter('ReferenceNumber');
+    }
+
+    public function setReferenceNumber($value)
+    {
+        return $this->setParameter('ReferenceNumber', $value);
+    }    
 
     public function purchase(array $parameters = array())
     {

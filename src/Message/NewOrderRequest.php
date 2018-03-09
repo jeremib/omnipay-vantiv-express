@@ -10,13 +10,34 @@ use SimpleXMLElement;
  */
 abstract class NewOrderRequest extends AbstractRequest
 {
-    protected function getXmlElement() {
-        return new SimpleXMLElement('<CreditCardSale xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardSale>');
+    protected function getXmlElement($method = 'CreditCard') {
+        if ( $method == 'CreditCard' ) {
+            return new SimpleXMLElement('<CreditCardSale xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardSale>');
+        } else {
+            return new SimpleXMLElement('<CheckSale xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CreditCheckSaleCardSale>');
+        }
     }
 
     protected function xmlData()
     {
-        $data = $this->getXmlElement();
+        
+
+
+        if ($card = $this->getCard()) {
+            $data = $this->getXmlElement('CreditCard');
+            $card = $data->Card;
+            $card->CardNumber       = $this->getCard()->getNumber();
+            $card->ExpirationMonth  = $this->getCard()->getExpiryDate('m');
+            $card->ExpirationYear   = $this->getCard()->getExpiryDate('y');
+            $card->CVV              = $this->getCard()->getCvv();
+        }elseif ( $this->getBCRtNum() ) {
+            $data = $this->getXmlElement('Check');
+            $depositAccount = $data->DemandDepositAccount;
+            $depositAccount->AccountNumber  = $this->getCheckDDA();
+            $depositAccount->RoutingNumber  = $this->getBCRtNum();
+            $depositAccount->DDAAccountType = 0;
+        }
+
         $credentials = $data->Credentials;
 
         $credentials->AccountID     = $this->getAccountID();
@@ -38,11 +59,7 @@ abstract class NewOrderRequest extends AbstractRequest
         $terminal->MotoECICode              = $this->getMotoECICode();
         $terminal->CVVPresenceCode          = $this->getCVVPresenceCode();
 
-        $card = $data->Card;
-        $card->CardNumber       = $this->getCard()->getNumber();
-        $card->ExpirationMonth  = $this->getCard()->getExpiryDate('m');
-        $card->ExpirationYear   = $this->getCard()->getExpiryDate('y');
-        $card->CVV              = $this->getCard()->getCvv();
+
 
         $address = $data->Address;
         $address->BillingName          = $this->getCard()->getCvv();
@@ -56,92 +73,12 @@ abstract class NewOrderRequest extends AbstractRequest
         $transaction = $data->Transaction;
         $transaction->TransactionAmount = $this->getAmountInteger();
 
-
-        // $newOrder = $data->NewOrder;
-        // $newOrder->OrbitalConnectionUsername = $this->getUsername();
-        // $newOrder->OrbitalConnectionPassword = $this->getPassword();
-
-        // $newOrder->IndustryType = $this->getIndustryType();
-        // $newOrder->MessageType = $this->getMessageType();
-        // $newOrder->BIN = $this->getBin();
-        // $newOrder->MerchantID = $this->getMerchantId();
-        // $newOrder->TerminalID = $this->getTerminalId();
-
-        // if ($brand = $this->getCardBrand()) {
-        //     $newOrder->CardBrand = $this->getCardBrand();
-        // }
-
-
-
-        // /** echeck */
-        // if ( $this->getBCRtNum() ) {
-        //     $newOrder->CurrencyCode = $this->getCurrencyCode();
-        //     $newOrder->CurrencyExponent = $this->getCurrencyExponent();
-        //     $newOrder->BCRtNum = $this->getBCRtNum();
-        //     $newOrder->CheckDDA = $this->getCheckDDA();
-
-        //     if ( $card = $this->getCard() ) {
-        //         $newOrder->AVSzip = $card->getBillingPostcode();
-        //         $newOrder->AVSaddress1 = $card->getBillingAddress1();
-        //         $newOrder->AVSaddress2 = $card->getBillingAddress2();
-        //         $newOrder->AVScity = $card->getBillingCity();
-        //         $newOrder->AVSstate = $card->getBillingState();
-        //         $newOrder->AVSphoneNum = $card->getBillingPhone();
-        //         $newOrder->AVSname = $card->getBillingName();
-        //         $newOrder->AVScountryCode = $card->getBillingCountry();
-
-        //         $newOrder->AVSDestzip = $card->getShippingPostcode();
-        //         $newOrder->AVSDestaddress1 = $card->getShippingAddress1();
-        //         $newOrder->AVSDestaddress2 = $card->getShippingAddress2();
-        //         $newOrder->AVSDestcity = $card->getShippingCity();
-        //         $newOrder->AVSDeststate = $card->getShippingState();
-        //         $newOrder->AVSDestphoneNum = $card->getShippingPhone();
-        //         $newOrder->AVSDestname = $card->getShippingName();
-        //         $newOrder->AVSDestcountryCode = $card->getShippingCountry();
-        //     }
-        //     unset($newOrder->AccountNum);
-        //     unset($newOrder->Exp);
-        //     unset($newOrder->CardSecVal);
-        // } elseif ($card = $this->getCard()) {
-        //     $newOrder->AccountNum = $card->getNumber();
-        //     $newOrder->Exp = $card->getExpiryDate('my');
-        //     $newOrder->CurrencyCode = $this->getCurrencyCode();
-        //     $newOrder->CurrencyExponent = $this->getCurrencyExponent();
-        //     $newOrder->CardSecVal = $card->getCvv();
-
-        //     $newOrder->AVSzip = $card->getBillingPostcode();
-        //     $newOrder->AVSaddress1 = $card->getBillingAddress1();
-        //     $newOrder->AVSaddress2 = $card->getBillingAddress2();
-        //     $newOrder->AVScity = $card->getBillingCity();
-        //     $newOrder->AVSstate = $card->getBillingState();
-        //     $newOrder->AVSphoneNum = $card->getBillingPhone();
-        //     $newOrder->AVSname = $card->getBillingName();
-        //     $newOrder->AVScountryCode = $card->getBillingCountry();
-
-        //     $newOrder->AVSDestzip = $card->getShippingPostcode();
-        //     $newOrder->AVSDestaddress1 = $card->getShippingAddress1();
-        //     $newOrder->AVSDestaddress2 = $card->getShippingAddress2();
-        //     $newOrder->AVSDestcity = $card->getShippingCity();
-        //     $newOrder->AVSDeststate = $card->getShippingState();
-        //     $newOrder->AVSDestphoneNum = $card->getShippingPhone();
-        //     $newOrder->AVSDestname = $card->getShippingName();
-        //     $newOrder->AVSDestcountryCode = $card->getShippingCountry();
-
-        // }
-
-
-
-
-        // $newOrder->OrderID = $this->getOrderId();
-        // $newOrder->Amount = $this->getAmountInteger();
-        // $newOrder->Comments = $this->getComments();
-        // $newOrder->TxRefNum = $this->getTxRefNum();
-
         return $data;
     }
 
     public function getData()
     {
+        $this->validate('ReferenceNumber');
         return $this->xmlData()->asXML();
     }
 
