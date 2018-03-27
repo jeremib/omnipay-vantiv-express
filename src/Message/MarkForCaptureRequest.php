@@ -39,8 +39,8 @@ class MarkForCaptureRequest extends AbstractRequest
         $terminal->CVVPresenceCode          = $this->getCVVPresenceCode();
 
         $transaction = $data->Transaction;
-        $transaction->TransactionAmount = $this->getAmountInteger();
-        $transaction->ReferenceNumber   = time();
+        $transaction->TransactionAmount = $this->getAmount();
+        $transaction->ReferenceNumber   = $this->getReferenceNumber();
         $transaction->TransactionID     = $this->getTransactionId();
 
         return $data;
