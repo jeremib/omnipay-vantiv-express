@@ -13,13 +13,12 @@ class NewOrderResponse extends AbstractResponse
 {
     public function getTransactionReference()
     {
-        return $this->data->Response->Transaction->TransactionID->__toString();
+        // return $this->data->Response->Transaction->TransactionID->__toString();
 
-        // return [
-        //     'trans_reference'   => $this->data->Response->Transaction->TransactionID->__toString(),
-        //     // 'order_id'          => $this->data->Response->Transaction->TransactionID->__toString(),
-        //     'auth_code'         => $this->data->Response->Transaction->ApprovalNumber->__toString(),
-        //     ];
+        return [
+            'trans_reference'   => $this->data->Response->Transaction->TransactionID->__toString(),
+            'auth_code'         => $this->data->Response->Transaction->ApprovalNumber->__toString(),
+            ];
     }
 
     public function isApproved()

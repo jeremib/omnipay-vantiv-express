@@ -72,7 +72,7 @@ abstract class NewOrderRequest extends AbstractRequest
 
         $transaction = $data->Transaction;
         $transaction->TransactionAmount = $this->getAmount();
-        $transaction->ReferenceNumber   = time();
+        $transaction->ReferenceNumber   = $this->getReferenceNumber();
 
         return $data;
     }
