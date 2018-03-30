@@ -37,6 +37,7 @@ class MarkForCaptureRequest extends AbstractRequest
         $terminal->CardPresentCode          = $this->getCardPresentCode();
         $terminal->MotoECICode              = $this->getMotoECICode();
         $terminal->CVVPresenceCode          = $this->getCVVPresenceCode();
+        $terminal->TerminalType             = $this->getTerminalType();
 
         $transaction = $data->Transaction;
         $transaction->TransactionAmount = $this->getAmount();

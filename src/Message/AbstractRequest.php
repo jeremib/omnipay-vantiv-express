@@ -14,7 +14,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     );
 
     protected $liveUrls = array(
-        'https://certtransaction.elementexpress.com',
+        'https://transaction.elementexpress.com/',
     );
 
     public function sendData($data)
@@ -166,6 +166,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('TerminalCapabilityCode', $value);
     }
+
+    public function getTerminalType()
+    {
+        return $this->getParameter('TerminalType');
+    }
+
+    public function setTerminalType($value)
+    {
+        return $this->setParameter('TerminalType', $value);
+    }    
 
     public function getTerminalEnvironmentCode()
     {

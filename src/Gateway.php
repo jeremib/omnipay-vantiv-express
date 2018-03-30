@@ -26,14 +26,15 @@ class Gateway extends AbstractGateway
             'ApplicationName'           => '',
             'ApplicationVersion'        => '',
             'TerminalID'                => '01',
-            'CardholderPresentCode'     => 2,
-            'CardInputCode'             => 5,
-            'TerminalCapabilityCode'    => 3,
-            'TerminalEnvironmentCode'   => 2,
-            'CardPresentCode'           => 2,
-            'MotoECICode'               => 1,
+            'CardholderPresentCode'     => 7,
+            'CardInputCode'             => 4,
+            'TerminalCapabilityCode'    => 5,
+            'TerminalEnvironmentCode'   => 6,
+            'CardPresentCode'           => 3,
+            'MotoECICode'               => 7,
             'CVVPresenceCode'           => 1,
-            'MarketCode'                => 7,
+            'MarketCode'                => 3,
+            'TerminalType'              => 2,
             'ReferenceNumber'           => ''
         ];
     }
