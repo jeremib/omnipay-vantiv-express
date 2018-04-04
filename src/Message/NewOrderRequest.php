@@ -14,28 +14,26 @@ abstract class NewOrderRequest extends AbstractRequest
         if ( $method == 'CreditCard' ) {
             return new SimpleXMLElement('<CreditCardSale xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardSale>');
         } else {
-            return new SimpleXMLElement('<CheckSale xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CreditCheckSaleCardSale>');
+            return new SimpleXMLElement('<CheckSale xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckSale>');
         }
     }
 
     protected function xmlData()
     {
-        
 
-
-        if ($card = $this->getCard()) {
+        if ( $this->getCheckAccountNumber() ) {
+            $data = $this->getXmlElement('Check');
+            $depositAccount = $data->DemandDepositAccount;
+            $depositAccount->AccountNumber  = $this->getCheckAccountNumber();
+            $depositAccount->RoutingNumber  = $this->getCheckRoutingNumber();
+            $depositAccount->DDAAccountType = 0;
+        } else {
             $data = $this->getXmlElement('CreditCard');
             $card = $data->Card;
             $card->CardNumber       = $this->getCard()->getNumber();
             $card->ExpirationMonth  = $this->getCard()->getExpiryDate('m');
             $card->ExpirationYear   = $this->getCard()->getExpiryDate('y');
             $card->CVV              = $this->getCard()->getCvv();
-        }elseif ( $this->getBCRtNum() ) {
-            $data = $this->getXmlElement('Check');
-            $depositAccount = $data->DemandDepositAccount;
-            $depositAccount->AccountNumber  = $this->getCheckAccountNumber();
-            $depositAccount->RoutingNumber  = $this->setCheckRoutingNumber();
-            $depositAccount->DDAAccountType = 0;
         }
 
         $credentials = $data->Credentials;
@@ -62,7 +60,7 @@ abstract class NewOrderRequest extends AbstractRequest
 
 
         $address = $data->Address;
-        $address->BillingName          = $this->getCard()->getCvv();
+        $address->BillingName          = $this->getCard()->getBillingName();
         $address->BillingAddress1      = $this->getCard()->getBillingAddress1();
         $address->BillingAddress2      = $this->getCard()->getBillingAddress2();
         $address->BillingCity          = $this->getCard()->getBillingCity();
@@ -73,6 +71,7 @@ abstract class NewOrderRequest extends AbstractRequest
         $transaction = $data->Transaction;
         $transaction->TransactionAmount = $this->getAmount();
         $transaction->ReferenceNumber   = $this->getReferenceNumber();
+        $transaction->MarketCode        = $this->getMarketCode();
 
         return $data;
     }
