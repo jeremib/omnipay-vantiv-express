@@ -18,6 +18,7 @@ class NewOrderResponse extends AbstractResponse
         return [
             'trans_reference'   => $this->data->Response->Transaction->TransactionID->__toString(),
             'auth_code'         => $this->data->Response->Transaction->ApprovalNumber->__toString(),
+            'acquirer_data'     => $this->data->Response->Transaction->AcquirerData->__toString(),
             ];
     }
 
