@@ -10,7 +10,7 @@ use SimpleXMLElement;
 class RefundRequest extends AbstractRequest
 {
     protected function getXmlElement() {
-        return new SimpleXMLElement('<CreditCardSale xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardSale>');
+        return new SimpleXMLElement('<CreditCardReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardReturn>');
     }
 
     protected function xmlData()
