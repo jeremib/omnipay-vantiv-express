@@ -175,7 +175,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setTerminalType($value)
     {
         return $this->setParameter('TerminalType', $value);
-    }    
+    }
 
     public function getTerminalEnvironmentCode()
     {
@@ -235,7 +235,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setTransactionId($value)
     {
         return $this->setParameter('TransactionId', $value);
-    }    
+    }
 
     public function getReversalType()
     {
@@ -245,7 +245,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setReversalType($value)
     {
         return $this->setParameter('ReversalType', $value);
-    }  
+    }
 
     public function getReferenceNumber()
     {
@@ -255,8 +255,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setReferenceNumber($value)
     {
         return $this->setParameter('ReferenceNumber', $value);
-    }   
-    
+    }
+
 
     public function getCheckAccountNumber()
     {
@@ -266,7 +266,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setCheckAccountNumber($value)
     {
         return $this->setParameter('CheckAccountNumber', $value);
-    }  
+    }
 
     public function getCheckRoutingNumber()
     {
@@ -276,6 +276,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setCheckRoutingNumber($value)
     {
         return $this->setParameter('CheckRoutingNumber', $value);
+    }
+    public function getOriginalMethod()
+    {
+        return $this->getParameter('OriginalMethod');
+    }
+
+    public function setOriginalMethod($value)
+    {
+        return $this->setParameter('OriginalMethod', $value);
     }
 
     public function getAmount()

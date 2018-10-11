@@ -10,12 +10,18 @@ use Omnipay\Common\Exception\InvalidResponseException;
  */
 class ReversalRequest extends AbstractRequest
 {
-    protected function getXmlElement() {
-        return new SimpleXMLElement('<CreditCardReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Transaction></Transaction></CreditCardReversal>');
+    protected function getXmlElement($method = 'CreditCard') {
+        if ( $method == 'CC' ) {
+            return new SimpleXMLElement('<CreditCardReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardReversal>');
+        } elseif ( $method == 'DEBIT' ) {
+            return new SimpleXMLElement('<DebitCardReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></DebitCardReversal>');
+        } else {
+            return new SimpleXMLElement('<CheckReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckReversal>');
+        }
     }
     protected function xmlData()
     {
-        $data = $this->getXmlElement();
+        $data = $this->getXmlElement($this->getOriginalMethod());
         $credentials = $data->Credentials;
 
         $credentials->AccountID     = $this->getAccountID();

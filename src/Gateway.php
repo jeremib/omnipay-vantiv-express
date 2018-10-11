@@ -35,7 +35,8 @@ class Gateway extends AbstractGateway
             'CVVPresenceCode'           => 1,
             'MarketCode'                => 3,
             'TerminalType'              => 2,
-            'ReferenceNumber'           => ''
+            'ReferenceNumber'           => '',
+            'OriginalMethod'            => ''
         ];
     }
 
@@ -197,7 +198,16 @@ class Gateway extends AbstractGateway
     public function setReferenceNumber($value)
     {
         return $this->setParameter('ReferenceNumber', $value);
-    }    
+    }
+    public function getOriginalMethod()
+    {
+        return $this->getParameter('OriginalMethod');
+    }
+
+    public function setOriginalMethod($value)
+    {
+        return $this->setParameter('OriginalMethod', $value);
+    }
 
     public function purchase(array $parameters = array())
     {

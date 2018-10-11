@@ -9,13 +9,19 @@ use SimpleXMLElement;
  */
 class RefundRequest extends AbstractRequest
 {
-    protected function getXmlElement() {
-        return new SimpleXMLElement('<CreditCardReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardReturn>');
+    protected function getXmlElement($method = 'CreditCard') {
+        if ( $method == 'CC' ) {
+            return new SimpleXMLElement('<CreditCardReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardReturn>');
+        } elseif ( $method == 'DEBIT' ) {
+            return new SimpleXMLElement('<DebitCardReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></DebitCardReturn>');
+        } else {
+            return new SimpleXMLElement('<CheckReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckReturn>');
+        }
     }
 
     protected function xmlData()
     {
-        $data = $this->getXmlElement();
+        $data = $this->getXmlElement($this->getOriginalMethod());
         $credentials = $data->Credentials;
 
         $credentials->AccountID     = $this->getAccountID();
