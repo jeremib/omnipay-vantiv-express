@@ -19,6 +19,7 @@ class NewOrderResponse extends AbstractResponse
             'trans_reference'   => $this->data->Response->Transaction->TransactionID->__toString(),
             'auth_code'         => $this->data->Response->Transaction->ApprovalNumber->__toString(),
             'acquirer_data'     => $this->data->Response->Transaction->AcquirerData->__toString(),
+            'reference_number'  => $this->data->Response->Transaction->ReferenceNumber->__toString(),
             'avs_response_code'     => isset($this->data->Response->Card->AVSResponseCode) ? $this->data->Response->Card->AVSResponseCode->__toString() : null,
             'cvv_response_code'     => isset($this->data->Response->Card->CVVResponseCode) ? $this->data->Response->Card->CVVResponseCode->__toString() : null,
             'card_logo'             => isset($this->data->Response->Card->CardLogo) ? $this->data->Response->Card->CardLogo->__toString() : null,
