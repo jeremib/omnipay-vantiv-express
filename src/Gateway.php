@@ -231,6 +231,15 @@ class Gateway extends AbstractGateway
 
     public function void(array $parameters = array())
     {
+        return $this->createRequest('\Omnipay\VantivExpress\Message\VoidRequest', $parameters);
+    }
+
+    public function reverse(array $parameters = array())
+    {
         return $this->createRequest('\Omnipay\VantivExpress\Message\ReversalRequest', $parameters);
+    }
+
+    public function query(array $parameters = array()) {
+        return $this->createRequest('\Omnipay\VantivExpress\Message\QueryRequest', $parameters);
     }
 }
