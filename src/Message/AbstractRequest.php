@@ -287,6 +287,59 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('OriginalMethod', $value);
     }
 
+    public function getTokenProvider()
+    {
+        return $this->getParameter('TokenProvider');
+    }
+
+    public function setTokenProvider($value)
+    {
+        return $this->setParameter('TokenProvider', $value);
+    }
+
+    public function getTokenID()
+    {
+        return $this->getParameter('TokenID');
+    }
+
+    public function setTokenID($value)
+    {
+        return $this->setParameter('TokenID', $value);
+    }
+
+    public function getCardLogo()
+    {
+        switch(strtoupper($this->getParameter('CardLogo'))) {
+            case 'VISA':
+                return 1;
+            case 'MASTERCARD':
+                return 2;
+            case 'AMEX':
+                return 3;
+            case 'DISCOVER':
+                return 4;
+            case 'DINERS':
+                return 5;
+            case 'STOREDVALUE':
+                return 6;
+            case 'OTHER':
+                return 7;
+            case 'JCB':
+                return 8;
+            case 'CARTEBLANCHE':
+                return 9;
+            case 'INTERAC':
+                return 10;
+            default:
+                0;
+        }
+    }
+
+    public function setCardLogo($value)
+    {
+        return $this->setParameter('CardLogo', $value);
+    }
+
     public function getAmount()
     {
         $this->setAmount((float)$amount = $this->getParameter('amount'));

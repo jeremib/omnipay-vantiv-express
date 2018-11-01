@@ -24,6 +24,9 @@ class NewOrderResponse extends AbstractResponse
             'cvv_response_code'     => isset($this->data->Response->Card->CVVResponseCode) ? $this->data->Response->Card->CVVResponseCode->__toString() : null,
             'card_logo'             => isset($this->data->Response->Card->CardLogo) ? $this->data->Response->Card->CardLogo->__toString() : null,
             'card_number_masked'    => isset($this->data->Response->Card->CardNumberMasked) ? $this->data->Response->Card->CardNumberMasked->__toString() : null,
+            'card_bin'              => isset($this->data->Response->Card->BIN) ? $this->data->Response->Card->BIN->__toString() : null,
+            'token_id'              => isset($this->data->Response->Token) ? $this->data->Response->Token->TokenID->__toString() : null,
+            'token_provider'        => isset($this->data->Response->Token) ? $this->data->Response->Token->TokenProvider->__toString() : null,
             ];
     }
 

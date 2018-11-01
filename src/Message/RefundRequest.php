@@ -46,7 +46,16 @@ class RefundRequest extends AbstractRequest
         $transaction = $data->Transaction;
         $transaction->TransactionAmount = $this->getAmount();
         $transaction->ReferenceNumber   = $this->getReferenceNumber();
-        $transaction->TransactionID     = $this->getTransactionId();
+
+        if ( $this->getTokenProvider() == 2 ) {
+            $data->Token->TokenProvider     = $this->getTokenProvider();
+            $data->Token->TokenID           = $this->getTokenID();
+            $data->Card->CardLogo           = $this->getCardLogo();
+        } else {
+            $transaction->TransactionID     = $this->getTransactionId();
+        }
+
+
 
         return $data;
     }

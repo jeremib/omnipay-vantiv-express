@@ -36,7 +36,10 @@ class Gateway extends AbstractGateway
             'MarketCode'                => 3,
             'TerminalType'              => 2,
             'ReferenceNumber'           => '',
-            'OriginalMethod'            => ''
+            'OriginalMethod'            => '',
+            'TokenID'                   => '',
+            'TokenProvider'             => ''
+
         ];
     }
 
@@ -209,6 +212,26 @@ class Gateway extends AbstractGateway
         return $this->setParameter('OriginalMethod', $value);
     }
 
+    public function getTokenProvider()
+    {
+        return $this->getParameter('TokenProvider');
+    }
+
+    public function setTokenProvider($value)
+    {
+        return $this->setParameter('TokenProvider', $value);
+    }
+
+    public function getTokenID()
+    {
+        return $this->getParameter('TokenID');
+    }
+
+    public function setTokenID($value)
+    {
+        return $this->setParameter('TokenID', $value);
+    }
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\VantivExpress\Message\PurchaseRequest', $parameters);
@@ -232,5 +255,10 @@ class Gateway extends AbstractGateway
     public function void(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\VantivExpress\Message\ReversalRequest', $parameters);
+    }
+
+    public function token(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\VantivExpress\Message\TokenCreateRequest', $parameters);
     }
 }
