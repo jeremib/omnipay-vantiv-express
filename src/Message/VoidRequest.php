@@ -8,15 +8,15 @@ use Omnipay\Common\Exception\InvalidResponseException;
 /**
  *  Vantiv Express Reversal Request
  */
-class ReversalRequest extends AbstractRequest
+class VoidRequest extends AbstractRequest
 {
     protected function getXmlElement($method = 'CreditCard') {
         if ( $method == 'CC' ) {
-            return new SimpleXMLElement('<CreditCardReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardReversal>');
+            return new SimpleXMLElement('<CreditCardVoid xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardVoid>');
         } elseif ( $method == 'DEBIT' ) {
-            return new SimpleXMLElement('<DebitCardReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></DebitCardReversal>');
+            return new SimpleXMLElement('<DebitCardVoid xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></DebitCardVoid>');
         } else {
-            return new SimpleXMLElement('<CheckReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckReversal>');
+            return new SimpleXMLElement('<CheckVoid xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckVoid>');
         }
     }
     protected function xmlData()
@@ -44,10 +44,8 @@ class ReversalRequest extends AbstractRequest
         $terminal->CVVPresenceCode          = $this->getCVVPresenceCode();
 
         $transaction = $data->Transaction;
-        $transaction->TransactionAmount = $this->getAmount();
         $transaction->ReferenceNumber   = $this->getReferenceNumber();
         $transaction->TransactionID     = $this->getTransactionId();
-        $transaction->ReversalType      = $this->getReversalType();
 
         return $data;
     }
@@ -62,7 +60,7 @@ class ReversalRequest extends AbstractRequest
     {
 
         if ($data->Response) {
-            return $this->response = new ReversalResponse($this, $data);
+            return $this->response = new VoidResponse($this, $data);
         } elseif ($data->QuickResp) {
             return $this->response = new QuickResponse($this, $data);
         } else {

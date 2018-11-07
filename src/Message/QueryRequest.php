@@ -6,18 +6,20 @@ use SimpleXMLElement;
 use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
- *  Vantiv Express Reversal Request
+ *  Vantiv Express Query Request
  */
-class ReversalRequest extends AbstractRequest
+class QueryRequest extends AbstractRequest
 {
+    protected $testUrls = array(
+        'https://certreporting.elementexpress.com',
+    );
+
+    protected $liveUrls = array(
+        'https://reporting.elementexpress.com/',
+    );
+
     protected function getXmlElement($method = 'CreditCard') {
-        if ( $method == 'CC' ) {
-            return new SimpleXMLElement('<CreditCardReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardReversal>');
-        } elseif ( $method == 'DEBIT' ) {
-            return new SimpleXMLElement('<DebitCardReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></DebitCardReversal>');
-        } else {
-            return new SimpleXMLElement('<CheckReversal xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckReversal>');
-        }
+        return new SimpleXMLElement('<TransactionQuery xmlns="https://reporting.elementexpress.com"><Credentials></Credentials><Application></Application><Parameters></Parameters></TransactionQuery>');
     }
     protected function xmlData()
     {
@@ -43,28 +45,27 @@ class ReversalRequest extends AbstractRequest
         $terminal->MotoECICode              = $this->getMotoECICode();
         $terminal->CVVPresenceCode          = $this->getCVVPresenceCode();
 
-        $transaction = $data->Transaction;
-        $transaction->TransactionAmount = $this->getAmount();
-        $transaction->ReferenceNumber   = $this->getReferenceNumber();
-        $transaction->TransactionID     = $this->getTransactionId();
-        $transaction->ReversalType      = $this->getReversalType();
+        $parameters = $data->Parameters;
+        if ( $this->getReferenceNumber() ) {
+            $parameters->ReferenceNumber   = $this->getReferenceNumber();
+        }
+
+        if ( $this->getTransactionId() ) {
+            $parameters->TransactionID         = $this->getTransactionId();
+        }
 
         return $data;
     }
 
     public function getData()
     {
-        $this->validate('TransactionId', 'ReversalType');
         return $this->xmlData()->asXML();
     }
 
     protected function createResponse($data)
     {
-
         if ($data->Response) {
-            return $this->response = new ReversalResponse($this, $data);
-        } elseif ($data->QuickResp) {
-            return $this->response = new QuickResponse($this, $data);
+            return $this->response = new QueryResponse($this, $data);
         } else {
             throw new InvalidResponseException();
         }
