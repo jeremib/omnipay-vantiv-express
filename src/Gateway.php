@@ -232,6 +232,36 @@ class Gateway extends AbstractGateway
         return $this->setParameter('TokenID', $value);
     }
 
+    public function getCardLogo()
+    {
+        return $this->getParameter('CardLogo');
+    }
+
+    public function setCardLogo($value)
+    {
+        return $this->setParameter('CardLogo', $value);
+    }
+
+    public function getExpirationMonth()
+    {
+        return $this->getParameter('ExpirationMonth');
+    }
+
+    public function setExpirationMonth($value)
+    {
+        return $this->setParameter('ExpirationMonth', $value);
+    }
+
+    public function getExpirationYear()
+    {
+        return $this->getParameter('ExpirationYear');
+    }
+
+    public function setExpirationYear($value)
+    {
+        return $this->setParameter('ExpirationYear', $value);
+    }
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\VantivExpress\Message\PurchaseRequest', $parameters);

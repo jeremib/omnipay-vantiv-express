@@ -13,7 +13,7 @@ class RefundRequest extends AbstractRequest
         if ( $method == 'CC' ) {
             return new SimpleXMLElement('<CreditCardReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardReturn>');
         } elseif ( $method == 'DEBIT' ) {
-            return new SimpleXMLElement('<DebitCardReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></DebitCardReturn>');
+            return new SimpleXMLElement('<CreditCardCredit xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardCredit>');
         } else {
             return new SimpleXMLElement('<CheckReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckReturn>');
         }
@@ -51,18 +51,18 @@ class RefundRequest extends AbstractRequest
             $data->Token->TokenProvider     = $this->getTokenProvider();
             $data->Token->TokenID           = $this->getTokenID();
             $data->Card->CardLogo           = $this->getCardLogo();
+            $data->Card->ExpirationMonth    = $this->getExpirationMonth();
+            $data->Card->ExpirationYear    = $this->getExpirationYear();
         } else {
             $transaction->TransactionID     = $this->getTransactionId();
         }
-
-
 
         return $data;
     }
 
     public function getData()
     {
-        $this->validate('TransactionId');
+//        $this->validate('TransactionId');
         return $this->xmlData()->asXML();
     }
 

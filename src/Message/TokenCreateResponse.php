@@ -17,6 +17,9 @@ class TokenCreateResponse extends AbstractResponse
             'trans_reference'       => $this->data->Response->ServicesID->__toString(),
             'token_id'              => isset($this->data->Response->Token) ? $this->data->Response->Token->TokenID->__toString() : null,
             'token_provider'        => isset($this->data->Response->Token) ? $this->data->Response->Token->TokenProvider->__toString() : null,
+            'card_logo'             => isset($this->data->Response->Card) ? $this->data->Response->Card->CardLogo->__toString() : null,
+            'card_exp_m'            => isset($this->data->Response->Card) ? $this->data->Response->Card->ExpirationMonth->__toString() : null,
+            'card_exp_y'            => isset($this->data->Response->Card) ? $this->data->Response->Card->ExpirationYear->__toString() : null,
             ];
     }
 
