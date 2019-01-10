@@ -37,7 +37,7 @@ class GatewayTest extends GatewayTestCase
         $response = $request->send();
 
         $this->assertTrue($response->isApproved());
-        $this->assertSame('3333348', $response->getTransactionReference());
+        $this->assertSame('3333348', $response->getTransactionReference()['trans_reference']);
         $this->assertTrue($response->isApproved());
         $this->assertSame('0', $response->getCode());
         $this->assertSame('Approved', $response->getMessage());
@@ -78,7 +78,7 @@ class GatewayTest extends GatewayTestCase
 
         $response = $request->send();
 
-        $this->assertSame('3334116', $response->getTransactionReference());
+        $this->assertSame('3334116', $response->getTransactionReference()['trans_reference']);
         $this->assertTrue($response->isApproved());
         $this->assertSame('0', $response->getCode());
         $this->assertSame('Approved', $response->getMessage());
@@ -97,7 +97,7 @@ class GatewayTest extends GatewayTestCase
 
         $response = $request->send();
 
-        $this->assertSame('3334677', $response->getTransactionReference());
+        $this->assertSame('3334677', $response->getTransactionReference()['trans_reference']);
         $this->assertTrue($response->isApproved());
     }
 
@@ -133,7 +133,7 @@ class GatewayTest extends GatewayTestCase
         $response = $request->send();
 
         $this->assertTrue($response->isApproved());
-        $this->assertSame('3335993', $response->getTransactionReference());
+        $this->assertSame('3335993', $response->getTransactionReference()['trans_reference']);
         $this->assertTrue($response->isApproved());
     }
 
@@ -152,7 +152,7 @@ class GatewayTest extends GatewayTestCase
         $response = $request->send();
 
         $this->assertTrue($response->isApproved());
-        $this->assertSame('3337678', $response->getTransactionReference());
+        $this->assertSame('3337678', $response->getTransactionReference()['trans_reference']);
     }
 
     public function testReversalInvalidState()

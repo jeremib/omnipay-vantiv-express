@@ -105,6 +105,16 @@ class Gateway extends AbstractGateway
         return $this->getParameter('TerminalID');
     }
 
+    public function setTerminalType($value)
+    {
+        return $this->setParameter('TerminalType', $value);
+    }
+
+    public function getTerminalType()
+    {
+        return $this->getParameter('TerminalType');
+    }
+
     public function setTerminalID($value)
     {
         return $this->setParameter('TerminalID', $value);
