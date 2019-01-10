@@ -3,22 +3,22 @@
 namespace Omnipay\VantivExpress\Message;
 
 use SimpleXMLElement;
+use Omnipay\Common\Exception\InvalidResponseException;
 
 /**
- *  Vantiv Express Refund Request
+ *  Vantiv Express Reversal Request
  */
-class RefundRequest extends AbstractRequest
+class VoidRequest extends AbstractRequest
 {
     protected function getXmlElement($method = 'CreditCard') {
         if ( $method == 'CC' ) {
-            return new SimpleXMLElement('<CreditCardReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardReturn>');
+            return new SimpleXMLElement('<CreditCardVoid xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardVoid>');
         } elseif ( $method == 'DEBIT' ) {
-            return new SimpleXMLElement('<CreditCardCredit xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></CreditCardCredit>');
+            return new SimpleXMLElement('<DebitCardVoid xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><Card></Card><Address></Address><Transaction></Transaction></DebitCardVoid>');
         } else {
-            return new SimpleXMLElement('<CheckReturn xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckReturn>');
+            return new SimpleXMLElement('<CheckVoid xmlns="https://transaction.elementexpress.com"><Credentials></Credentials><Application></Application><Terminal></Terminal><DemandDepositAccount></DemandDepositAccount><Address></Address><Transaction></Transaction></CheckVoid>');
         }
     }
-
     protected function xmlData()
     {
         $data = $this->getXmlElement($this->getOriginalMethod());
@@ -44,32 +44,25 @@ class RefundRequest extends AbstractRequest
         $terminal->CVVPresenceCode          = $this->getCVVPresenceCode();
 
         $transaction = $data->Transaction;
-        $transaction->TransactionAmount = $this->getAmount();
         $transaction->ReferenceNumber   = $this->getReferenceNumber();
-
-        if ( $this->getTokenProvider() == 2 ) {
-            $data->Token->TokenProvider     = $this->getTokenProvider();
-            $data->Token->TokenID           = $this->getTokenID();
-            $data->Card->CardLogo           = $this->getCardLogo();
-            $data->Card->ExpirationMonth    = $this->getExpirationMonth();
-            $data->Card->ExpirationYear    = $this->getExpirationYear();
-        } else {
-            $transaction->TransactionID     = $this->getTransactionId();
-        }
+        $transaction->TransactionID     = $this->getTransactionId();
 
         return $data;
     }
 
     public function getData()
     {
-//        $this->validate('TransactionId');
+        $this->validate('TransactionId', 'ReversalType');
         return $this->xmlData()->asXML();
     }
 
     protected function createResponse($data)
     {
+
         if ($data->Response) {
-            return $this->response = new NewOrderResponse($this, $data);
+            return $this->response = new VoidResponse($this, $data);
+        } elseif ($data->QuickResp) {
+            return $this->response = new QuickResponse($this, $data);
         } else {
             throw new InvalidResponseException();
         }

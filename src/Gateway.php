@@ -36,7 +36,10 @@ class Gateway extends AbstractGateway
             'MarketCode'                => 3,
             'TerminalType'              => 2,
             'ReferenceNumber'           => '',
-            'OriginalMethod'            => ''
+            'OriginalMethod'            => '',
+            'TokenID'                   => '',
+            'TokenProvider'             => ''
+
         ];
     }
 
@@ -219,6 +222,56 @@ class Gateway extends AbstractGateway
         return $this->setParameter('OriginalMethod', $value);
     }
 
+    public function getTokenProvider()
+    {
+        return $this->getParameter('TokenProvider');
+    }
+
+    public function setTokenProvider($value)
+    {
+        return $this->setParameter('TokenProvider', $value);
+    }
+
+    public function getTokenID()
+    {
+        return $this->getParameter('TokenID');
+    }
+
+    public function setTokenID($value)
+    {
+        return $this->setParameter('TokenID', $value);
+    }
+
+    public function getCardLogo()
+    {
+        return $this->getParameter('CardLogo');
+    }
+
+    public function setCardLogo($value)
+    {
+        return $this->setParameter('CardLogo', $value);
+    }
+
+    public function getExpirationMonth()
+    {
+        return $this->getParameter('ExpirationMonth');
+    }
+
+    public function setExpirationMonth($value)
+    {
+        return $this->setParameter('ExpirationMonth', $value);
+    }
+
+    public function getExpirationYear()
+    {
+        return $this->getParameter('ExpirationYear');
+    }
+
+    public function setExpirationYear($value)
+    {
+        return $this->setParameter('ExpirationYear', $value);
+    }
+
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\VantivExpress\Message\PurchaseRequest', $parameters);
@@ -241,6 +294,19 @@ class Gateway extends AbstractGateway
 
     public function void(array $parameters = array())
     {
+        return $this->createRequest('\Omnipay\VantivExpress\Message\VoidRequest', $parameters);
+    }
+
+    public function reverse(array $parameters = array())
+    {
         return $this->createRequest('\Omnipay\VantivExpress\Message\ReversalRequest', $parameters);
+    }
+
+    public function token(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\VantivExpress\Message\TokenCreateRequest', $parameters);
+    }
+    public function query(array $parameters = array()) {
+        return $this->createRequest('\Omnipay\VantivExpress\Message\QueryRequest', $parameters);
     }
 }

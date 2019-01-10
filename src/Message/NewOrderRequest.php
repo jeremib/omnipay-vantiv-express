@@ -73,6 +73,8 @@ abstract class NewOrderRequest extends AbstractRequest
         $transaction->ReferenceNumber   = $this->getReferenceNumber();
         $transaction->MarketCode        = $this->getMarketCode();
 
+        $data->Token->TokenProvider             = 2;
+
         return $data;
     }
 
