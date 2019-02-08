@@ -32,7 +32,9 @@ class QueryResponse extends AbstractResponse
 
     public function getReportingData() {
         $results = [];
-        if ( $this->data->Response->ExpressResponseCode->__toString() != 0 ) {
+        if ( $this->data->Response->ExpressResponseCode->__toString() == 90 ) {
+            return [];
+        }elseif ( $this->data->Response->ExpressResponseCode->__toString() != 0 ) {
             throw new InvalidResponseException($this->data->Response->ExpressResponseMessage->__toString(), $this->data->Response->ExpressResponseCode->__toString());
         }
         foreach($this->data->Response->ReportingData->Items->Item as $el) {
