@@ -256,6 +256,25 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('ReferenceNumber', $value);
     }
 
+    public function getStartDate()
+    {
+        return $this->getParameter('StartDate');
+    }
+
+    public function setStartDate($value)
+    {
+        return $this->setParameter('StartDate', $value);
+    }
+
+    public function getEndDate()
+    {
+        return $this->getParameter('EndDate');
+    }
+
+    public function setEndDate($value)
+    {
+        return $this->setParameter('EndDate', $value);
+    }
 
     public function getCheckAccountNumber()
     {

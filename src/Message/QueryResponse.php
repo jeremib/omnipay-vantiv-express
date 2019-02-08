@@ -2,6 +2,7 @@
 
 namespace Omnipay\VantivExpress\Message;
 
+use Omnipay\Common\Exception\InvalidResponseException;
 use SimpleXMLElement;
 use Omnipay\Common\Message\AbstractResponse;
 
@@ -31,8 +32,11 @@ class QueryResponse extends AbstractResponse
 
     public function getReportingData() {
         $results = [];
-        foreach($this->data->Response->ReportingData->Items as $el) {
-            $results[] = (array)$el->Item;
+        if ( $this->data->Response->ExpressResponseCode->__toString() != 0 ) {
+            throw new InvalidResponseException($this->data->Response->ExpressResponseMessage->__toString(), $this->data->Response->ExpressResponseCode->__toString());
+        }
+        foreach($this->data->Response->ReportingData->Items->Item as $el) {
+            $results[] = (array)$el;
         }
         return $results;
     }

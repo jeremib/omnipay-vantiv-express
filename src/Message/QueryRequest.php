@@ -54,6 +54,14 @@ class QueryRequest extends AbstractRequest
             $parameters->TransactionID         = $this->getTransactionId();
         }
 
+        if ( $this->getStartDate() ) {
+            $parameters->TransactionDateTimeBegin         = $this->getStartDate();
+        }
+
+        if ( $this->getEndDate() ) {
+            $parameters->TransactionDateTimeEnd         = $this->getEndDate();
+        }
+
         return $data;
     }
 
