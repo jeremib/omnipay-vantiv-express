@@ -71,7 +71,8 @@ abstract class NewOrderRequest extends AbstractRequest
         $transaction = $data->Transaction;
         $transaction->TransactionAmount = $this->getAmount();
         $transaction->ReferenceNumber   = $this->getReferenceNumber();
-        $transaction->MarketCode        = $this->getMarketCode();
+        $transaction->MarketCode = $this->getMarketCode();
+        $transaction->DuplicateCheckDisableFlag = true;
 
         $data->Token->TokenProvider             = 2;
 
